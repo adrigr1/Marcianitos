@@ -194,7 +194,7 @@ public class JuegoSurfaceView extends SurfaceView implements SurfaceHolder.Callb
         if(idPulsacion!=escenaActual.idEscena){
             cambioEscena(idPulsacion);
         }
-        return super.onTouchEvent(event);
+        return true;
     }
 
     @Override

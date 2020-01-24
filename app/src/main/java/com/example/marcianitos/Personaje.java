@@ -1,11 +1,16 @@
 package com.example.marcianitos;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Personaje {
 
@@ -14,6 +19,7 @@ public class Personaje {
     int x, y;
     int frameActual = 0;
     int cont = 0;
+    Bitmap frame;
 
 
     int vidas;
@@ -27,6 +33,7 @@ public class Personaje {
 
     Rect cuadrado;
     Paint pincelRect;
+    Context contet;
 
 
     public Personaje(Bitmap[] frames, int x, int y, int vidas , int anchoPantalla ,int altoPantalla ) {
@@ -53,12 +60,32 @@ public class Personaje {
     public void actualizaRectangulo() {
         cuadrado.set(x, y, x + frames[frameActual].getWidth(), y + frames[frameActual].getHeight());
     }
+    public Personaje(Bitmap frame,int anchoPantalla ,int altoPantalla ) {
+        this.anchoPantalla = anchoPantalla;
+
+        this.frame=frame;
+
+        frame = getBitmapFromAssets("boton.png");
+       // frame = Bitmap.createScaledBitmap(frame, anchoPantalla*3/2, altoPantalla, false);
+
+    }
 
     public void dibuja(Canvas c) {
 //        if(frames[fr])
-        c.drawBitmap(frames[frameActual], x, y, null);
-        c.drawRect(cuadrado, pincelRect);
+//        c.drawBitmap(frames[frameActual], x, y, null);
+//        c.drawRect(cuadrado, pincelRect);
+        c.drawBitmap(frame,anchoPantalla*3/2,altoPantalla,null);
     }
+
+    public Bitmap getBitmapFromAssets(String fichero) {
+        try {
+            InputStream is = this.contet.getAssets().open(fichero);
+            return BitmapFactory.decodeStream(is);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
 
     public void mover() {
         if (System.currentTimeMillis() - tiempoMover > tickMover) {

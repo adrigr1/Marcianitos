@@ -14,29 +14,29 @@ import java.io.InputStream;
 
 public class Personaje {
 
-    int anchoPantalla, altoPantalla;
-    Bitmap[] frames, framesd, framesi;
-    int x, y;
-    int frameActual = 0;
-    int cont = 0;
-    Bitmap frame;
+    private int anchoPantalla, altoPantalla;
+    //Bitmap[] frames, framesd, framesi;
+    private int x, y;
+    private int frameActual = 0;
+    private int cont = 0;
+    private Bitmap frame;
 
 
-    int vidas;
+    private int vidas;
 
-    int tickFrame = 100;
-    long tiempoFrame;
+    private int tickFrame = 100;
+    private long tiempoFrame;
 
-    int velocidad = 0;
-    int tickMover = 50;
-    long tiempoMover;
+    private  int velocidad = 0;
+    private int tickMover = 50;
+    private long tiempoMover;
 
-    Rect cuadrado;
-    Paint pincelRect;
-    Context contet;
+    private Rect cuadrado;
+    private Paint pincelRect;
+    private Context contet;
 
 
-    public Personaje(Bitmap frame, int x, int y, int vidas, int anchoPantalla, int altoPantalla) {
+    private Personaje(Bitmap frame, int x, int y, int vidas, int anchoPantalla, int altoPantalla) {
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
         this.frame = frame;
@@ -52,7 +52,7 @@ public class Personaje {
         //cuadrado.set(x, y, x + frames[frameActual].getWidth(), y + frames[frameActual].getHeight());
     }
 
-    public Personaje(Bitmap frame, int x, int y, int anchoPantalla, int altoPantalla) {
+    private Personaje(Bitmap frame, int x, int y, int anchoPantalla, int altoPantalla) {
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
         this.frame = frame;
@@ -60,7 +60,7 @@ public class Personaje {
         this.y = y;
     }
 
-    public void dibuja(Canvas c) {
+    private void dibuja(Canvas c) {
         //if (nav) {
             c.drawBitmap(frame, x, y, null);
         //}else{
@@ -77,7 +77,7 @@ public class Personaje {
         }
     }
 
-    public void mover3() {
+    private void mover3() {
         if (System.currentTimeMillis() - tiempoMover > tickMover) {
             velocidad = 30;
             this.x += velocidad;
@@ -87,7 +87,7 @@ public class Personaje {
     }
 
 
-    public void mover() {
+    private void mover() {
         if (System.currentTimeMillis() - tiempoMover > tickMover) {
             velocidad=7;
             this.y += velocidad;
@@ -115,12 +115,12 @@ public class Personaje {
     }
 
     public void mover1(int tipo) {
-        if (tipo == 1) {
-            //mover();
-        } else mover2();
+//        if (tipo == 1) {
+//            //mover();
+//        } else mover2();
     }
 
-    public void mover2() {
+    private void mover2() {
         if (System.currentTimeMillis() - tiempoMover > tickMover) {
             velocidad = -7;
             this.y += velocidad;
@@ -161,10 +161,10 @@ public class Personaje {
         cambiaFrame();
     }
 
-    public void cambiaFrame() {
+    private void cambiaFrame() {
         if (System.currentTimeMillis() - tiempoFrame > tickFrame) {
             cont++;
-            frameActual = cont % frames.length;
+            //frameActual = cont % frames.length;
             tiempoFrame = System.currentTimeMillis();
         }
     }
@@ -194,13 +194,13 @@ public class Personaje {
         this.vidas = vidas;
     }
 
-    public Bitmap[] getFrames() {
-        return frames;
-    }
-
-    public void setFrames(Bitmap[] frames) {
-        this.frames = frames;
-    }
+//    public Bitmap[] getFrames() {
+//        return frames;
+//    }
+//
+//    public void setFrames(Bitmap[] frames) {
+//        this.frames = frames;
+//    }
 
     public int getX() {
         return x;
@@ -238,11 +238,11 @@ public class Personaje {
         return velocidad;
     }
 
-    public void setVelocidad(int velocidad) {
-        this.velocidad = (int) (velocidad * 1.4f);
-        if (velocidad > 0) frames = framesd;
-        else frames = framesi;
-    }
+//    public void setVelocidad(int velocidad) {
+//        this.velocidad = (int) (velocidad * 1.4f);
+//        if (velocidad > 0) frames = framesd;
+//        else frames = framesi;
+//    }
 
     public int getFrameActual() {
         return frameActual;

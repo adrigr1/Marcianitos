@@ -79,8 +79,8 @@ public class JuegoSurfaceView extends SurfaceView implements SurfaceHolder.Callb
             bitmaps[i] = escalaAltura(bitmaps[i], altoPantalla / 3);
         }
 
-        per = new Personaje(bitmaps, anchoPantalla / 2, altoPantalla - bitmaps[0].getHeight() - altoPantalla / 8, 4, anchoPantalla, altoPantalla);
-        per2 = new Personaje(bitmaps, anchoPantalla / 2, altoPantalla - bitmaps[0].getHeight() - altoPantalla / 8, 4, anchoPantalla, altoPantalla);
+//        per = new Personaje(bitmaps, anchoPantalla / 2, altoPantalla - bitmaps[0].getHeight() - altoPantalla / 8, 4, anchoPantalla, altoPantalla);
+//        per2 = new Personaje(bitmaps, anchoPantalla / 2, altoPantalla - bitmaps[0].getHeight() - altoPantalla / 8, 4, anchoPantalla, altoPantalla);
 
         fondo1 = getBitmapFromAssets("intro.jpg");
         fondo1 = Bitmap.createScaledBitmap(fondo1, anchoPantalla, altoPantalla, false);

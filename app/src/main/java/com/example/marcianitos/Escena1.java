@@ -17,7 +17,7 @@ public class Escena1 extends Escena {
     Bitmap fondo1;
     Bitmap nave, gun, gun1;
     Fondo f;
-    Personaje gun10;
+    Personaje per,per1;
     Rect up, down, gunBtn;
     Paint butControl;
     int posy, posxGun;
@@ -42,8 +42,12 @@ public class Escena1 extends Escena {
         butControl.setColor(Color.GREEN);
 
         nave = getBitmapFromAssets("1.png");
+        per = new Personaje(nave, anchoPantalla / 20*3, altoPantalla/2, 4, anchoPantalla, altoPantalla);
+
         gun = getBitmapFromAssets("boton.png");
         gun1 = getBitmapFromAssets("boton.png");
+        per1 = new Personaje(gun1, anchoPantalla / 20*3, altoPantalla/2, anchoPantalla, altoPantalla);
+
         //gun1=new Personaje(gun,anchoPantalla/7*6,altoPantalla/2,1,anchoPantalla,altoPantalla);
         //nave = Bitmap.createScaledBitmap(nave, anchoPantalla, altoPantalla, false);
     }
@@ -55,21 +59,23 @@ public class Escena1 extends Escena {
         c.drawText("Escena 1", anchoPantalla / 2, ptexto.getTextSize() * 2, ptexto);
         c.drawRect(up, butControl);
         c.drawRect(down, butControl);
-
+        per.dibuja(c);
 
         posxGun += velGun;
 
-        posy += velNave;
 
-        c.drawBitmap(nave, anchoPantalla / 6, posy, null);
+
+        //c.drawBitmap(nave, anchoPantalla / 6, posy, null);
 
         c.drawRect(gunBtn, butControl);
         c.drawBitmap(gun, anchoPantalla / 7 * 6, altoPantalla / 2, null);
+
         if (disparar) {
             if (posxGun == anchoPantalla) {
                 posxGun = anchoPantalla / 6;
             }
-            c.drawBitmap(gun1, posxGun, posy, null);
+            per1.dibuja(c);
+//            c.drawBitmap(gun1,anchoPantalla / 20*3, altoPantalla/2, null);
         }
         super.dibuja(c);
     }
@@ -93,30 +99,29 @@ public class Escena1 extends Escena {
             case MotionEvent.ACTION_DOWN:
                 if (gunBtn.contains((int) event.getX(), (int) event.getY())) {
                     disparar = true;
-                    velGun = 10;
+                    per1.mover3();
                 }
 
                 Log.i("pulso", "bajo");
                 //break;
             case MotionEvent.ACTION_POINTER_DOWN:
                 if (down.contains((int) event.getX(), (int) event.getY())) {
-                    velNave = 7;
+                    per.mover();
                 }
 
                 if (up.contains((int) event.getX(), (int) event.getY())) {
                     if (posy <= 0) {
                         velNave = 0;
                     } else {
-                        velNave = -7;
+                        per.mover2();
                     }
                 }
-
-
+//                posy += velNave;
                 Log.i("pulso", "bajo otro");
                 break;
             case MotionEvent.ACTION_UP:
                 if (gunBtn.contains((int) event.getX(), (int) event.getY())) {
-                    disparar = false;
+                    //disparar = false;
                 }
                 Log.i("pulso", "subo");
                 ;

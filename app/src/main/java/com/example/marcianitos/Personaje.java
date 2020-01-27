@@ -14,7 +14,7 @@ import java.io.InputStream;
 
 public class Personaje {
 
-    int anchoPantalla = 0, altoPantalla = 0;
+    int anchoPantalla, altoPantalla;
     Bitmap[] frames, framesd, framesi;
     int x, y;
     int frameActual = 0;
@@ -27,7 +27,7 @@ public class Personaje {
     int tickFrame = 100;
     long tiempoFrame;
 
-    int velocidad = 5;
+    int velocidad = 0;
     int tickMover = 50;
     long tiempoMover;
 
@@ -36,45 +36,36 @@ public class Personaje {
     Context contet;
 
 
-    public Personaje(Bitmap[] frames, int x, int y, int vidas , int anchoPantalla ,int altoPantalla ) {
-        this.anchoPantalla=anchoPantalla;
-        this.altoPantalla=altoPantalla;
-        this.frames = frames;
-        framesd = frames;
-        framesi = new Bitmap[frames.length];
-        for (int i = 0; i < framesi.length; i++) {
-            framesi[i] = espejo(frames[i],true);
-        }
+    public Personaje(Bitmap frame, int x, int y, int vidas, int anchoPantalla, int altoPantalla) {
+        this.anchoPantalla = anchoPantalla;
+        this.altoPantalla = altoPantalla;
+        this.frame = frame;
         this.x = x;
         this.y = y;
         this.vidas = vidas;
         this.tiempoFrame = System.currentTimeMillis();
         this.tiempoMover = System.currentTimeMillis();
-        pincelRect = new Paint();
-        pincelRect.setColor(Color.RED);
-        pincelRect.setStyle(Paint.Style.STROKE);
-        pincelRect.setStrokeWidth(10);
-        cuadrado = new Rect(x, y, x + frames[frameActual].getWidth(), y + frames[frameActual].getHeight());
+
     }
 
     public void actualizaRectangulo() {
-        cuadrado.set(x, y, x + frames[frameActual].getWidth(), y + frames[frameActual].getHeight());
+        //cuadrado.set(x, y, x + frames[frameActual].getWidth(), y + frames[frameActual].getHeight());
     }
-    public Personaje(Bitmap frame,int anchoPantalla ,int altoPantalla ) {
+
+    public Personaje(Bitmap frame, int x, int y, int anchoPantalla, int altoPantalla) {
         this.anchoPantalla = anchoPantalla;
-
-        this.frame=frame;
-
-        frame = getBitmapFromAssets("boton.png");
-       // frame = Bitmap.createScaledBitmap(frame, anchoPantalla*3/2, altoPantalla, false);
-
+        this.altoPantalla = altoPantalla;
+        this.frame = frame;
+        this.x = x;
+        this.y = y;
     }
 
     public void dibuja(Canvas c) {
-//        if(frames[fr])
-//        c.drawBitmap(frames[frameActual], x, y, null);
-//        c.drawRect(cuadrado, pincelRect);
-        c.drawBitmap(frame,anchoPantalla*3/2,altoPantalla,null);
+        //if (nav) {
+            c.drawBitmap(frame, x, y, null);
+        //}else{
+
+        //}
     }
 
     public Bitmap getBitmapFromAssets(String fichero) {
@@ -86,65 +77,86 @@ public class Personaje {
         }
     }
 
+    public void mover3() {
+        if (System.currentTimeMillis() - tiempoMover > tickMover) {
+            velocidad = 30;
+            this.x += velocidad;
+            tiempoMover = System.currentTimeMillis();
+//            actualizaRectangulo();
+        }
+    }
+
 
     public void mover() {
         if (System.currentTimeMillis() - tiempoMover > tickMover) {
-            this.x += velocidad;
-            if(this.x+this.frames[frameActual].getWidth()>anchoPantalla){
-                this.x=anchoPantalla-this.frames[frameActual].getWidth();
-                velocidad*=-1*1.1f;
-                frames=framesi;
-            }
-            if(this.x<0) {
-                this.x=0;
-                velocidad*=-1*1.1f;
-                frames=framesd;
-            }
-            tiempoMover = System.currentTimeMillis();
-            if(velocidad>0 && velocidad>200) velocidad=200;
-            if(velocidad>0 && velocidad<-200) velocidad=-200;
-
-            actualizaRectangulo();
-        }
-    }
-
-    public void mover1(int tipo){
-        if(tipo==1){
-            mover();
-        }
-        else mover2();
-    }
-
-    public void mover2(){
-        if (System.currentTimeMillis() - tiempoMover > tickMover) {
-            this.x += velocidad;
+            velocidad=7;
             this.y += velocidad;
-            if(this.x+this.frames[frameActual].getWidth()>anchoPantalla){
-                this.x=anchoPantalla-this.frames[frameActual].getWidth();
-                velocidad*=-1*1.1f;
-                frames=framesi;
-            }
-            if(this.y>altoPantalla){
-                this.y=0;
-            }
-            if(this.y<0){
-                this.y=altoPantalla;
-            }
-            if(this.x<0) {
-                this.x=0;
-                velocidad*=-1*1.1f;
-                frames=framesd;
-            }
             tiempoMover = System.currentTimeMillis();
-            if(velocidad>0 && velocidad>200) velocidad=200;
-            if(velocidad>0 && velocidad<-200) velocidad=-200;
-
-            actualizaRectangulo();
+//            actualizaRectangulo();
         }
+//        if (System.currentTimeMillis() - tiempoMover > tickMover) {
+//            this.x += velocidad;
+//            if(this.x+this.frames[frameActual].getWidth()>anchoPantalla){
+//                this.x=anchoPantalla-this.frames[frameActual].getWidth();
+//                velocidad*=-1*1.1f;
+//                frames=framesi;
+//            }
+//            if(this.x<0) {
+//                this.x=0;
+//                velocidad*=-1*1.1f;
+//                frames=framesd;
+//            }
+//            tiempoMover = System.currentTimeMillis();
+//            if(velocidad>0 && velocidad>200) velocidad=200;
+//            if(velocidad>0 && velocidad<-200) velocidad=-200;
+//
+//            actualizaRectangulo();
+//        }
+    }
+
+    public void mover1(int tipo) {
+        if (tipo == 1) {
+            //mover();
+        } else mover2();
+    }
+
+    public void mover2() {
+        if (System.currentTimeMillis() - tiempoMover > tickMover) {
+            velocidad = -7;
+            this.y += velocidad;
+            tiempoMover = System.currentTimeMillis();
+            //actualizaRectangulo();
+        }
+
+//        if (System.currentTimeMillis() - tiempoMover > tickMover) {
+//            this.x += velocidad;
+//            this.y += velocidad;
+//            if(this.x+this.frames[frameActual].getWidth()>anchoPantalla){
+//                this.x=anchoPantalla-this.frames[frameActual].getWidth();
+//                velocidad*=-1*1.1f;
+//                frames=framesi;
+//            }
+//            if(this.y>altoPantalla){
+//                this.y=0;
+//            }
+//            if(this.y<0){
+//                this.y=altoPantalla;
+//            }
+//            if(this.x<0) {
+//                this.x=0;
+//                velocidad*=-1*1.1f;
+//                frames=framesd;
+//            }
+//            tiempoMover = System.currentTimeMillis();
+//            if(velocidad>0 && velocidad>200) velocidad=200;
+//            if(velocidad>0 && velocidad<-200) velocidad=-200;
+//
+//            actualizaRectangulo();
+//        }
     }
 
     public void todo(Canvas c) {
-        dibuja(c);
+        //dibuja(c);
         mover();
         cambiaFrame();
     }
@@ -227,9 +239,9 @@ public class Personaje {
     }
 
     public void setVelocidad(int velocidad) {
-        this.velocidad = (int)(velocidad*1.4f);
-        if(velocidad>0) frames=framesd;
-        else  frames=framesi;
+        this.velocidad = (int) (velocidad * 1.4f);
+        if (velocidad > 0) frames = framesd;
+        else frames = framesi;
     }
 
     public int getFrameActual() {

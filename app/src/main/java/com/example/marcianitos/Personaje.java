@@ -14,29 +14,31 @@ import java.io.InputStream;
 
 public class Personaje {
 
-    private int anchoPantalla, altoPantalla;
+    int anchoPantalla, altoPantalla;
     //Bitmap[] frames, framesd, framesi;
-    private int x, y;
-    private int frameActual = 0;
-    private int cont = 0;
-    private Bitmap frame;
+    int x, y;
+    int frameActual = 0;
+    int cont = 0;
+    Bitmap frame;
 
 
-    private int vidas;
+    int vidas;
 
-    private int tickFrame = 100;
-    private long tiempoFrame;
+    int tickFrame = 100;
+    long tiempoFrame;
 
-    private  int velocidad = 0;
-    private int tickMover = 50;
-    private long tiempoMover;
+    int velocidad = 0;
+    int speedShoot = 50;
 
-    private Rect cuadrado;
-    private Paint pincelRect;
-    private Context contet;
+    int tickMover = 50;
+    long tiempoMover;
+
+    Rect cuadrado;
+    Paint pincelRect;
+    Context contet;
 
 
-    private Personaje(Bitmap frame, int x, int y, int vidas, int anchoPantalla, int altoPantalla) {
+    public Personaje(Bitmap frame, int x, int y, int vidas, int anchoPantalla, int altoPantalla) {
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
         this.frame = frame;
@@ -52,7 +54,7 @@ public class Personaje {
         //cuadrado.set(x, y, x + frames[frameActual].getWidth(), y + frames[frameActual].getHeight());
     }
 
-    private Personaje(Bitmap frame, int x, int y, int anchoPantalla, int altoPantalla) {
+    public Personaje(Bitmap frame, int x, int y, int anchoPantalla, int altoPantalla) {
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
         this.frame = frame;
@@ -60,12 +62,8 @@ public class Personaje {
         this.y = y;
     }
 
-    private void dibuja(Canvas c) {
-        //if (nav) {
-            c.drawBitmap(frame, x, y, null);
-        //}else{
-
-        //}
+    public void dibuja(Canvas c) {
+        c.drawBitmap(frame, x, y, null);
     }
 
     public Bitmap getBitmapFromAssets(String fichero) {
@@ -77,23 +75,21 @@ public class Personaje {
         }
     }
 
-    private void mover3() {
-        if (System.currentTimeMillis() - tiempoMover > tickMover) {
-            velocidad = 30;
-            this.x += velocidad;
+    public void shoot() {
+            this.x += speedShoot;
             tiempoMover = System.currentTimeMillis();
-//            actualizaRectangulo();
-        }
     }
 
 
-    private void mover() {
-        if (System.currentTimeMillis() - tiempoMover > tickMover) {
-            velocidad=7;
+    public void moveDown(boolean movement) {
+            if(movement) {
+                velocidad = 10;
+            }else{
+                velocidad=0;
+            }
             this.y += velocidad;
             tiempoMover = System.currentTimeMillis();
-//            actualizaRectangulo();
-        }
+
 //        if (System.currentTimeMillis() - tiempoMover > tickMover) {
 //            this.x += velocidad;
 //            if(this.x+this.frames[frameActual].getWidth()>anchoPantalla){
@@ -114,19 +110,16 @@ public class Personaje {
 //        }
     }
 
-    public void mover1(int tipo) {
-//        if (tipo == 1) {
-//            //mover();
-//        } else mover2();
-    }
-
-    private void mover2() {
-        if (System.currentTimeMillis() - tiempoMover > tickMover) {
-            velocidad = -7;
+    public void moveUP(boolean movement) {
+            if(movement) {
+                velocidad = -10;
+            }else{
+                velocidad=0;
+            }
             this.y += velocidad;
             tiempoMover = System.currentTimeMillis();
-            //actualizaRectangulo();
-        }
+//            actualizaRectangulo();
+       // }
 
 //        if (System.currentTimeMillis() - tiempoMover > tickMover) {
 //            this.x += velocidad;
@@ -157,11 +150,11 @@ public class Personaje {
 
     public void todo(Canvas c) {
         //dibuja(c);
-        mover();
+       // mover();
         cambiaFrame();
     }
 
-    private void cambiaFrame() {
+    public void cambiaFrame() {
         if (System.currentTimeMillis() - tiempoFrame > tickFrame) {
             cont++;
             //frameActual = cont % frames.length;

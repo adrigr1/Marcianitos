@@ -16,7 +16,7 @@ public class Personaje {
 
     int anchoPantalla, altoPantalla;
     //Bitmap[] frames, framesd, framesi;
-    int x, y;
+    int x, y, y2;
     int frameActual = 0;
     int cont = 0;
     Bitmap frame;
@@ -28,7 +28,7 @@ public class Personaje {
     long tiempoFrame;
 
     int velocidad = 0;
-    int speedShoot = 50;
+    int speedShoot = 30;
 
     int tickMover = 50;
     long tiempoMover;
@@ -54,16 +54,20 @@ public class Personaje {
         //cuadrado.set(x, y, x + frames[frameActual].getWidth(), y + frames[frameActual].getHeight());
     }
 
-    public Personaje(Bitmap frame, int x, int y, int anchoPantalla, int altoPantalla) {
+    public Personaje(Bitmap frame, int x, int y2, int anchoPantalla, int altoPantalla) {
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
         this.frame = frame;
         this.x = x;
-        this.y = y;
+        this.y2 = y2;
     }
 
     public void dibuja(Canvas c) {
         c.drawBitmap(frame, x, y, null);
+    }
+
+    public void dibuja2(Canvas c) {
+        c.drawBitmap(frame, x, y2, null);
     }
 
     public Bitmap getBitmapFromAssets(String fichero) {
@@ -76,20 +80,23 @@ public class Personaje {
     }
 
     public void shoot() {
-            this.x += speedShoot;
-            tiempoMover = System.currentTimeMillis();
+        this.x += speedShoot;
+
+        tiempoMover = System.currentTimeMillis();
     }
 
 
-    public void moveDown(boolean movement) {
-            if(movement) {
-                velocidad = 10;
-            }else{
-                velocidad=0;
-            }
+    public void moveDown(boolean movement,int naveheight) {
+        if (movement) {
+            velocidad = 10;
+        } else {
+            velocidad = 0;
+        }
+        if (this.y >= altoPantalla-naveheight) {
+            this.y = altoPantalla-naveheight;
+        } else {
             this.y += velocidad;
-            tiempoMover = System.currentTimeMillis();
-
+        }
 //        if (System.currentTimeMillis() - tiempoMover > tickMover) {
 //            this.x += velocidad;
 //            if(this.x+this.frames[frameActual].getWidth()>anchoPantalla){
@@ -111,15 +118,17 @@ public class Personaje {
     }
 
     public void moveUP(boolean movement) {
-            if(movement) {
-                velocidad = -10;
-            }else{
-                velocidad=0;
-            }
+        if (movement) {
+            velocidad = -10;
+        } else {
+            velocidad = 0;
+        }
+        if (this.y <= 0) {
+            this.y = 0;
+        } else {
             this.y += velocidad;
-            tiempoMover = System.currentTimeMillis();
-//            actualizaRectangulo();
-       // }
+        }
+
 
 //        if (System.currentTimeMillis() - tiempoMover > tickMover) {
 //            this.x += velocidad;
@@ -150,7 +159,7 @@ public class Personaje {
 
     public void todo(Canvas c) {
         //dibuja(c);
-       // mover();
+        // mover();
         cambiaFrame();
     }
 

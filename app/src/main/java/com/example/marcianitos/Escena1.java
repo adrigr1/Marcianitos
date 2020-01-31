@@ -20,7 +20,7 @@ public class Escena1 extends Escena {
     Personaje per, bala;
     Rect up, down, gunBtn;
     Paint butControl;
-    int posy, posxGun;
+    int posy, posyGun;
     int velNave = 0, velGun = 0;
     boolean disparar = false, mUp = false, mDown = false;
     Canvas a;
@@ -35,21 +35,21 @@ public class Escena1 extends Escena {
         down = new Rect(0, altoPantalla / 20 * 12, anchoPantalla / 20*2, altoPantalla);
         gunBtn = new Rect(anchoPantalla / 20*18, altoPantalla / 2, anchoPantalla / 20 * 19, altoPantalla / 20 * 11);
 
-        posxGun = anchoPantalla / 6;
+
         posy = altoPantalla / 2;
 
         butControl = new Paint();
         butControl.setColor(Color.GREEN);
 
         nave = getBitmapFromAssets("1.png");
-        per = new Personaje(nave, anchoPantalla / 20 * 3, altoPantalla / 2, 4, anchoPantalla, altoPantalla);
+        per = new Personaje(nave, anchoPantalla / 20 * 3, posy, 4, anchoPantalla, altoPantalla);
+
+
 
         gun = getBitmapFromAssets("boton.png");
         gun1 = getBitmapFromAssets("boton.png");
-        bala = new Personaje(gun1, anchoPantalla / 20 * 3 + nave.getWidth(), altoPantalla / 2, anchoPantalla, altoPantalla);
-//
-        //gun1=new Personaje(gun,anchoPantalla/7*6,altoPantalla/2,1,anchoPantalla,altoPantalla);
-        //nave = Bitmap.createScaledBitmap(nave, anchoPantalla, altoPantalla, false);
+        bala = new Personaje(gun1, anchoPantalla / 20 * 3 + nave.getWidth(), posyGun, anchoPantalla, altoPantalla);
+
     }
 
     @Override
@@ -61,13 +61,14 @@ public class Escena1 extends Escena {
         c.drawRect(down, butControl);
         per.dibuja(c);
 
-        posxGun += velGun;
+        //posxGun += velGun;
 
         c.drawRect(gunBtn, butControl);
         c.drawBitmap(gun, anchoPantalla / 20*18, altoPantalla / 2, null);
 
         if (disparar) {
-            bala.dibuja(c);
+            posyGun=per.getY();
+            bala.dibuja2(c);
         }
         super.dibuja(c);
     }
@@ -78,9 +79,9 @@ public class Escena1 extends Escena {
         super.actualizaFisica();
         if (disparar) bala.shoot();
         if (mDown) {
-            per.moveDown(true);
+            per.moveDown(true,nave.getHeight());
         } else {
-            per.moveDown(false);
+            per.moveDown(false,nave.getHeight());
         }
         if (mUp) {
             per.moveUP(true);
@@ -99,6 +100,7 @@ public class Escena1 extends Escena {
         switch (accion) {
             case MotionEvent.ACTION_DOWN:
                 if (gunBtn.contains((int) event.getX(), (int) event.getY())) {
+
                     disparar = true;
                 }
 
@@ -111,6 +113,7 @@ public class Escena1 extends Escena {
                 if (up.contains((int) event.getX(), (int) event.getY())) {
                     mUp = true;
                 }
+
                 Log.i("pulso", "bajo otro");
                 break;
             case MotionEvent.ACTION_UP:

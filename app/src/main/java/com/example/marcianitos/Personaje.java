@@ -80,20 +80,24 @@ public class Personaje {
     }
 
     public void shoot() {
-        this.x += speedShoot;
-
+        if (this.x >= anchoPantalla) {
+            this.x=anchoPantalla/20*3;
+        }else{
+            this.x += speedShoot;
+        }
+//        this.y2+=y;
         tiempoMover = System.currentTimeMillis();
     }
 
 
-    public void moveDown(boolean movement,int naveheight) {
+    public void moveDown(boolean movement, int naveheight) {
         if (movement) {
             velocidad = 10;
         } else {
             velocidad = 0;
         }
-        if (this.y >= altoPantalla-naveheight) {
-            this.y = altoPantalla-naveheight;
+        if (this.y >= altoPantalla - naveheight) {
+            this.y = altoPantalla - naveheight;
         } else {
             this.y += velocidad;
         }

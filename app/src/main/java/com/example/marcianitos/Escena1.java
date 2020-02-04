@@ -12,10 +12,12 @@ import android.view.MotionEvent;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Timer;
 
 public class Escena1 extends Escena {
     Bitmap fondo1;
     Bitmap nave, gun, gun1;
+    Timer timer;
     Fondo f;
     Personaje per, bala;
     Rect up, down, gunBtn;
@@ -48,8 +50,9 @@ public class Escena1 extends Escena {
 
         gun = getBitmapFromAssets("boton.png");
         gun1 = getBitmapFromAssets("boton.png");
-        bala = new Personaje(gun1, anchoPantalla / 20 * 3 + nave.getWidth(), posyGun, anchoPantalla, altoPantalla);
+        bala = new Personaje(gun1, anchoPantalla / 20 * 3 + nave.getWidth(), posy+nave.getWidth()/2, anchoPantalla, altoPantalla);
 
+        timer=new Timer();
     }
 
     @Override
@@ -67,8 +70,10 @@ public class Escena1 extends Escena {
         c.drawBitmap(gun, anchoPantalla / 20*18, altoPantalla / 2, null);
 
         if (disparar) {
-            posyGun=per.getY();
-            bala.dibuja2(c);
+            
+                bala.dibuja2(c);
+
+
         }
         super.dibuja(c);
     }
@@ -109,6 +114,7 @@ public class Escena1 extends Escena {
             case MotionEvent.ACTION_POINTER_DOWN:
                 if (down.contains((int) event.getX(), (int) event.getY())) {
                     mDown = true;
+
                 }
                 if (up.contains((int) event.getX(), (int) event.getY())) {
                     mUp = true;

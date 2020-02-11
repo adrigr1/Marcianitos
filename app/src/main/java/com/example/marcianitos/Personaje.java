@@ -11,6 +11,7 @@ import android.graphics.Rect;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class Personaje {
 
@@ -37,7 +38,17 @@ public class Personaje {
     Paint pincelRect;
     Context contet;
 
+    //ArrayList<Laser> mLasers;
 
+    /**
+     * Contructor para la Nave
+     * @param frame
+     * @param x
+     * @param y
+     * @param vidas
+     * @param anchoPantalla
+     * @param altoPantalla
+     */
     public Personaje(Bitmap frame, int x, int y, int vidas, int anchoPantalla, int altoPantalla) {
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
@@ -47,6 +58,7 @@ public class Personaje {
         this.vidas = vidas;
         this.tiempoFrame = System.currentTimeMillis();
         this.tiempoMover = System.currentTimeMillis();
+        //mLasers= new ArrayList<>();
 
     }
 
@@ -54,6 +66,14 @@ public class Personaje {
         //cuadrado.set(x, y, x + frames[frameActual].getWidth(), y + frames[frameActual].getHeight());
     }
 
+    /**
+     * Constructor para Laser
+     * @param frame
+     * @param x
+     * @param y2
+     * @param anchoPantalla
+     * @param altoPantalla
+     */
     public Personaje(Bitmap frame, int x, int y2, int anchoPantalla, int altoPantalla) {
         this.anchoPantalla = anchoPantalla;
         this.altoPantalla = altoPantalla;
@@ -62,10 +82,18 @@ public class Personaje {
         this.y2 = y2;
     }
 
+    /**
+     * Dibuja Nave
+     * @param c
+     */
     public void dibuja(Canvas c) {
         c.drawBitmap(frame, x, y, null);
     }
 
+    /**
+     * Dibuja Laser
+     * @param c
+     */
     public void dibuja2(Canvas c) {
         c.drawBitmap(frame, x, y2, null);
     }
@@ -80,6 +108,8 @@ public class Personaje {
     }
 
     public void shoot() {
+//        mLasers.add(new Laser(frame,x,y,anchoPantalla,altoPantalla));
+        this.y2=y;
         if (this.x >= anchoPantalla) {
             this.x=anchoPantalla/20*3;
         }else{
@@ -89,6 +119,9 @@ public class Personaje {
         tiempoMover = System.currentTimeMillis();
     }
 
+//    public ArrayList<Laser> getLasers() {
+//        return mLasers;
+//    }
 
     public void moveDown(boolean movement, int naveheight) {
         if (movement) {

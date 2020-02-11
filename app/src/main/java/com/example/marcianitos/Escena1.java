@@ -12,12 +12,12 @@ import android.view.MotionEvent;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Timer;
 
 public class Escena1 extends Escena {
     Bitmap fondo1;
     Bitmap nave, gun, gun1;
-    Timer timer;
     Fondo f;
     Personaje per, bala;
     Rect up, down, gunBtn;
@@ -27,6 +27,13 @@ public class Escena1 extends Escena {
     boolean disparar = false, mUp = false, mDown = false;
     Canvas a;
 
+    /**
+     * Escena del Juego
+     * @param idEscena
+     * @param anchoPantalla
+     * @param altoPantalla
+     * @param contet
+     */
     public Escena1(int idEscena, int anchoPantalla, int altoPantalla, Context contet) {
         super(idEscena, anchoPantalla, altoPantalla, contet);
         fondo1 = getBitmapFromAssets("espacio.png");
@@ -52,7 +59,7 @@ public class Escena1 extends Escena {
         gun1 = getBitmapFromAssets("boton.png");
         bala = new Personaje(gun1, anchoPantalla / 20 * 3 + nave.getWidth(), posy+nave.getWidth()/2, anchoPantalla, altoPantalla);
 
-        timer=new Timer();
+
     }
 
     @Override
@@ -69,11 +76,10 @@ public class Escena1 extends Escena {
         c.drawRect(gunBtn, butControl);
         c.drawBitmap(gun, anchoPantalla / 20*18, altoPantalla / 2, null);
 
-        if (disparar) {
-            
-                bala.dibuja2(c);
+        //for (Laser l : per.getLasers()) {
 
-
+        if(disparar){
+            bala.dibuja2(c);
         }
         super.dibuja(c);
     }
@@ -105,7 +111,6 @@ public class Escena1 extends Escena {
         switch (accion) {
             case MotionEvent.ACTION_DOWN:
                 if (gunBtn.contains((int) event.getX(), (int) event.getY())) {
-
                     disparar = true;
                 }
 
